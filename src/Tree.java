@@ -1,18 +1,46 @@
-import java.util.Arrays;
-import java.util.Scanner;
+import java.util.*;
 
 public class Tree {
+//    private class TreeNode {
+//        TreeNode parent;
+//        ArrayList<TreeNode> children;
+//        boolean isRoot = false;
+//
+//        public ArrayList<TreeNode> getChildren() {
+//            return children;
+//        }
+//
+//        public TreeNode(boolean isRoot) {
+//            this.isRoot = isRoot;
+//            this.children = new ArrayList<>();
+//        }
+//
+//        public TreeNode(TreeNode parent) {
+//            this.parent = parent;
+//            this.children = new ArrayList<>();
+//        }
+//
+//        public void addChild(TreeNode child) {
+//            this.children.add(child);
+//        }
+//
+//    }
 
     public void calculate_height(int[] nodes) {
+        ArrayList<Integer> nums = new ArrayList<>();
         int depth_counter = 1;
         int root = 0;
         for(int i =0; i < nodes.length; i++) {
-            if (nodes[i] == -1) {
-                root = i;
-                break;
+//            if (nodes[i] == -1) {
+//                root = i;
+//                break;
+//            }
+            if( !nums.contains(nodes[i])) {
+                nums.add(nodes[i]);
             }
-        }
 
+        }
+        System.out.println(nums.size());
 
     }
 
@@ -32,7 +60,6 @@ public class Tree {
         for (i = 0; i < nodes.length; i++) {
             nodes[i] = Integer.parseInt(line2[i]);
         }
-
-
+        tree.calculate_height(nodes);
     }
 }
