@@ -1,51 +1,54 @@
 import java.util.*;
 
 public class Tree {
-//    private class TreeNode {
-//        TreeNode parent;
-//        ArrayList<TreeNode> children;
-//        boolean isRoot = false;
-//
-//        public ArrayList<TreeNode> getChildren() {
-//            return children;
+    int[] nodes;
+    MyNodes rootNode;
+    public Tree(int[] nodes) {
+        this.nodes = nodes;
+    }
+
+//    public ArrayList<Integer> addChildren(int number) {
+//        ArrayList<Integer> allChildren = new ArrayList<>();
+//        for (int i=0; i<nodes.length; i++) {
+//            if(nodes[i] == number) {
+//                allChildren.add(nodes[i]);
+//            }
 //        }
-//
-//        public TreeNode(boolean isRoot) {
-//            this.isRoot = isRoot;
-//            this.children = new ArrayList<>();
-//        }
-//
-//        public TreeNode(TreeNode parent) {
-//            this.parent = parent;
-//            this.children = new ArrayList<>();
-//        }
-//
-//        public void addChild(TreeNode child) {
-//            this.children.add(child);
-//        }
-//
+//        return allChildren;
 //    }
 
-    public void calculate_height(int[] nodes) {
-        ArrayList<Integer> nums = new ArrayList<>();
-        int depth_counter = 1;
+    public void calculate_height() {
         int root = 0;
-        for(int i =0; i < nodes.length; i++) {
-//            if (nodes[i] == -1) {
-//                root = i;
-//                break;
-//            }
-            if( !nums.contains(nodes[i])) {
-                nums.add(nodes[i]);
+        Stack<MyNodes> toAdd = new Stack<>();
+        for (int i = 0; i < nodes.length; i++) {
+            if (nodes[i] == -1) {
+                root = i;
+                break;
             }
-
         }
-        System.out.println(nums.size());
+        rootNode = new MyNodes(root);
+        toAdd.add(rootNode);
+        while (!toAdd.isEmpty()) {
+            MyNodes next = toAdd.pop();
+            System.out.println("The next node is" + next.getNumber());
+            for(int i=0; i < nodes.length; i++) {
+                if(nodes[i] == next.getNumber()) {
+                    MyNodes child = new MyNodes(i);
+                    next.addChildren(child);
+                    toAdd.add(child);
+                    System.out.println(next.getNumber() + " has a new child +" + child.getNumber());
+                }
+            }
+        }
+    }
+    public void depthFirstSearch() {
 
     }
 
+
+
     public static void main(String[] args) {
-        Tree tree = new Tree();
+
         Scanner scanner = new Scanner(System.in);
         //String tree_size = scanner.next();
         String[] all_entries = new String[2];
@@ -60,6 +63,8 @@ public class Tree {
         for (i = 0; i < nodes.length; i++) {
             nodes[i] = Integer.parseInt(line2[i]);
         }
-        tree.calculate_height(nodes);
+        Tree tree = new Tree(nodes);
+        tree.calculate_height();
+
     }
 }
