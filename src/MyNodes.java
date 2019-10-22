@@ -23,7 +23,4 @@ public class MyNodes {
         return number;
     }
 
-
-
-
 }

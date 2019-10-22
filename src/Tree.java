@@ -1,6 +1,30 @@
 import java.util.*;
 
 public class Tree {
+    public class MyNodes {
+        ArrayList<MyNodes> children;
+        int number;
+        MyNodes parent;
+        public MyNodes(int number) {
+            this.children = new ArrayList<>();
+            this.number = number;
+        }
+        public void addChildren(MyNodes node, MyNodes parent) {
+            node.parent = parent;
+            children.add(node);
+        }
+        public ArrayList<MyNodes> getChildren() {
+            if(children.isEmpty()) {
+                return new ArrayList<>();
+            }
+            return children;
+        }
+        public int getNumber() {
+            return number;
+        }
+
+    }
+
     int[] nodes;
     MyNodes rootNode;
     public Tree(int[] nodes) {
@@ -64,7 +88,11 @@ public class Tree {
             }
             while(theParent != root) {
                 counter +=1;
-                theParent = theParent.parent;
+                try {
+                    theParent = theParent.parent;
+                } catch ( NullPointerException e) {
+                    break;
+                }
             }
             if(deepest < counter) {
                 deepest = counter;
