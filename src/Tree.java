@@ -6,17 +6,6 @@ public class Tree {
     public Tree(int[] nodes) {
         this.nodes = nodes;
     }
-
-//    public ArrayList<Integer> addChildren(int number) {
-//        ArrayList<Integer> allChildren = new ArrayList<>();
-//        for (int i=0; i<nodes.length; i++) {
-//            if(nodes[i] == number) {
-//                allChildren.add(nodes[i]);
-//            }
-//        }
-//        return allChildren;
-//    }
-
     public void calculate_height() {
         int root = 0;
         Stack<MyNodes> toAdd = new Stack<>();
@@ -30,27 +19,62 @@ public class Tree {
         toAdd.add(rootNode);
         while (!toAdd.isEmpty()) {
             MyNodes next = toAdd.pop();
-            System.out.println("The next node is" + next.getNumber());
             for(int i=0; i < nodes.length; i++) {
                 if(nodes[i] == next.getNumber()) {
                     MyNodes child = new MyNodes(i);
-                    next.addChildren(child);
+                    next.addChildren(child, next);
                     toAdd.add(child);
-                    System.out.println(next.getNumber() + " has a new child +" + child.getNumber());
                 }
             }
         }
-    }
-    public void depthFirstSearch() {
+        depthFirstSearch(rootNode);
 
     }
+    public void depthFirstSearch(MyNodes root) {
+        int deepest =1;
+        int counter = 1;
+        Stack<MyNodes> toSearch = new Stack<>();
+        Stack<MyNodes> secondSearch = new Stack<>();
+        if(root.getChildren() == null) {
+            System.out.println(1);
+            return;
+        }
+        toSearch.add(root);
+        secondSearch.add(root);
+        while (!toSearch.isEmpty()) {
+            MyNodes next = toSearch.pop();
+            for (MyNodes node: next.getChildren()
+            ) {
+                toSearch.add(node);
+                secondSearch.add(node);
+            }
+        }
 
-
-
+        while(!secondSearch.isEmpty()) {
+            MyNodes next = secondSearch.pop();
+            MyNodes theParent;
+            try {
+                 theParent = next.parent;
+            } catch ( NullPointerException e) {
+                counter += 1;
+                if(deepest < counter) {
+                    deepest = counter;
+                }
+                break;
+            }
+            while(theParent != root) {
+                counter +=1;
+                theParent = theParent.parent;
+            }
+            if(deepest < counter) {
+                deepest = counter;
+                counter = 1;
+            }
+        }
+        System.out.println(deepest);
+    }
     public static void main(String[] args) {
-
         Scanner scanner = new Scanner(System.in);
-        //String tree_size = scanner.next();
         String[] all_entries = new String[2];
         int i=0;
         while(i < 2) {
@@ -65,6 +89,5 @@ public class Tree {
         }
         Tree tree = new Tree(nodes);
         tree.calculate_height();
-
     }
 }

@@ -1,22 +1,21 @@
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.PriorityQueue;
-import java.util.Queue;
+import java.util.*;
 
 public class MyNodes {
     ArrayList<MyNodes> children;
     int number;
     boolean visited = false;
+    MyNodes parent;
     public MyNodes(int number) {
         this.children = new ArrayList<>();
         this.number = number;
     }
-    public void addChildren(MyNodes node) {
+    public void addChildren(MyNodes node, MyNodes parent) {
+        node.parent = parent;
         children.add(node);
     }
     public ArrayList<MyNodes> getChildren() {
         if(children.isEmpty()) {
-            return null;
+            return new ArrayList<>();
         }
         return children;
     }
@@ -24,27 +23,6 @@ public class MyNodes {
         return number;
     }
 
-    public void depthFirstSearch(MyNodes root) {
-        int deepest =1;
-        int numChildren;
-        Queue<MyNodes> toSearch = new LinkedList<>();
-        if(root.getChildren() == null) {
-            System.out.println(1);
-            return;
-        }
-        toSearch.add(root);
-        while (!toSearch.isEmpty()) {
-            MyNodes cur = toSearch.remove();
-            numChildren = cur.getChildren().size();
-            for (MyNodes node : cur.getChildren()
-                 ) {
-                toSearch.add(node);
-            }
-
-
-        }
-
-    }
 
 
 
